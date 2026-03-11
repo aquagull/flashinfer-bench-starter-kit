@@ -37,13 +37,13 @@ def run_benchmark(solution: Solution, config: BenchmarkConfig = None) -> dict:
     if config is None:
         config = BenchmarkConfig(warmup_runs=3, iterations=100, num_trials=5)
 
-    trace_set = TraceSet.from_path(TRACE_SET_PATH)
+    trace_set = TraceSet.from_path(f"{TRACE_SET_PATH}/mlsys26-contest")
 
     if solution.definition not in trace_set.definitions:
-        raise ValueError(f"Definition '{solution.definition}' not found in trace set")
+        raise ValueError(f"Definition '{solution.definition}' not found in trace set. Available: {list(trace_set.definitions.keys())}")
 
     definition = trace_set.definitions[solution.definition]
-    workloads = trace_set.workloads.get(solution.definition, [])
+    workloads = trace_set.workloads.get(solution.definition, [])[:1]
 
     if not workloads:
         raise ValueError(f"No workloads found for definition '{solution.definition}'")

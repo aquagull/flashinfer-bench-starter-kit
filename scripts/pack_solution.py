@@ -42,7 +42,7 @@ def pack_solution(output_path: Path = None) -> Path:
     entry_point = build_config["entry_point"]
 
     # Determine source directory based on language
-    if language == "triton":
+    if language == "triton" or language == "python":
         source_dir = PROJECT_ROOT / "solution" / "triton"
     elif language == "cuda":
         source_dir = PROJECT_ROOT / "solution" / "cuda"

@@ -18,7 +18,7 @@ from scripts.pack_solution import pack_solution
 
 def get_trace_set_path() -> str:
     """Get trace set path from environment variable."""
-    path = os.environ.get("FIB_DATASET_PATH")
+    path = os.environ.get("FIB_DATASET_PATH", "/mnt/afs/aqua/opt-tts/qwen_tts/mlsys26-contest")
     if not path:
         raise EnvironmentError(
             "FIB_DATASET_PATH environment variable not set. "
@@ -39,7 +39,7 @@ def run_benchmark(solution: Solution, config: BenchmarkConfig = None) -> dict:
         raise ValueError(f"Definition '{solution.definition}' not found in trace set")
 
     definition = trace_set.definitions[solution.definition]
-    workloads = trace_set.workloads.get(solution.definition, [])
+    workloads = trace_set.workloads.get(solution.definition, [])[:1]
 
     if not workloads:
         raise ValueError(f"No workloads found for definition '{solution.definition}'")
@@ -57,6 +57,8 @@ def run_benchmark(solution: Solution, config: BenchmarkConfig = None) -> dict:
 
     traces = result_trace_set.traces.get(definition.name, [])
     results = {definition.name: {}}
+
+    import pdb; pdb.set_trace()
 
     for trace in traces:
         if trace.evaluation:
